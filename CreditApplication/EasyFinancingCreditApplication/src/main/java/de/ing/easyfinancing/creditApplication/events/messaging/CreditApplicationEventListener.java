@@ -13,7 +13,7 @@ import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepo
 @Component
 @Transactional
 public class CreditApplicationEventListener {
-	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
+
 	private final CreditApplicationRepository creditApplicationRepository;
 
 	public CreditApplicationEventListener(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
