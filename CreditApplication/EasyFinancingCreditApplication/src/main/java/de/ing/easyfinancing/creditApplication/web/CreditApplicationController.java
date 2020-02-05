@@ -1,7 +1,5 @@
 package de.ing.easyfinancing.creditApplication.web;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import de.ing.easyfinancing.creditApplication.events.CreditApplicationEnteredEvent;
 import de.ing.easyfinancing.creditApplication.events.CreditApplicationScoringDispatcher;
 import de.ing.easyfinancing.creditApplication.model.CreditApplication;
+import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -26,9 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 public class CreditApplicationController {
 	
 	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
-	
-	public CreditApplicationController(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher) {
+	private final CreditApplicationRepository repository;
+	public CreditApplicationController(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher, final CreditApplicationRepository repository) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
+		this.repository = repository;
 	}
 
 	@GetMapping("/")
@@ -50,6 +50,8 @@ public class CreditApplicationController {
 				.creditApplication(creditApplication)
 				.build();
 		
+		repository.save(creditApplication);
+		
 		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
 		creditApplicationScoringDispatcher.creditApplicationOut().send(message); 
 		
@@ -58,50 +60,9 @@ public class CreditApplicationController {
 	
 	@GetMapping("/CreditApplicationOverview")
 	public String creditApplicationOverview( Model model) {
-		List<CreditApplication> creditApplications = Arrays.asList(
-				
-				CreditApplication
-				.builder()
-				.applicationDate(LocalDateTime.now())
-				.applicationState("Dummy")
-				.firstName("Max")
-				.city("Köln")
-				.monthlyIncome(1000)
-				.monthlyExpenditure(200)
-				.creditApplicationId("12345")
-				.creditSum(3000)
-				.lastName("Mustermann")
-				.build(),
-
-				CreditApplication
-				.builder()
-				.applicationDate(LocalDateTime.now())
-				.applicationState("Dummy")
-				.firstName("Max")
-				.city("Köln")
-				.monthlyIncome(1000)
-				.monthlyExpenditure(200)
-				.creditApplicationId("23456")
-				.creditSum(20000)
-				.lastName("Mustermann")
-				.build(),
-				
-				CreditApplication
-				.builder()
-				.applicationDate(LocalDateTime.now())
-				.applicationState("Dummy")
-				.firstName("Max")
-				.city("Köln")
-				.monthlyIncome(1000)
-				.monthlyExpenditure(200)
-				.creditApplicationId("9876")
-				.creditSum(1000)
-				.lastName("Doe")
-				.build()
-				
-		);
+		List<CreditApplication> creditApplications = repository.findAllAsList();
 			
-	model.addAttribute("creditApplications", creditApplications);
+		model.addAttribute("creditApplications", creditApplications);
 		
 
 		return "CreditApplicationOverview";
@@ -109,18 +70,7 @@ public class CreditApplicationController {
 	
 	@GetMapping("/StatusDetail/{id}")
 	public String statusDetails(@PathVariable String id, Model model) {
-		CreditApplication creditApplication = CreditApplication
-		.builder()
-		.applicationDate(LocalDateTime.now())
-		.applicationState("Dummy")
-		.firstName("Max")
-		.city("Köln")
-		.monthlyIncome(1000)
-		.monthlyExpenditure(200)
-		.creditApplicationId("9876")
-		.creditSum(1000)
-		.lastName("Doe")
-		.build();
+		CreditApplication creditApplication = repository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
 		
 		model.addAttribute("creditApplication", creditApplication);
 		return "StatusCreditApplication"; 
