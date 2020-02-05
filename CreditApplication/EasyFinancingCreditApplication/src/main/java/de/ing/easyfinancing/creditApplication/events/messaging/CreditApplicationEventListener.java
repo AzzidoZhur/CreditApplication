@@ -15,8 +15,10 @@ import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepo
 public class CreditApplicationEventListener {
 
 	private final CreditApplicationRepository creditApplicationRepository;
+	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
+	
 
-	public CreditApplicationEventListener(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
+	public CreditApplicationEventListener(final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
 			CreditApplicationRepository creditApplicationRepository) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
 		this.creditApplicationRepository = creditApplicationRepository;
