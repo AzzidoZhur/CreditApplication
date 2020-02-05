@@ -5,6 +5,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.ing.easyfinancing.creditApplication.events.CityCheckDoneEvent;
 import de.ing.easyfinancing.creditApplication.events.CreditApplicationScoringDispatcher;
 import de.ing.easyfinancing.creditApplication.events.ScoringDoneEvent;
 import de.ing.easyfinancing.creditApplication.model.CreditApplication;
@@ -55,4 +56,18 @@ public class CreditApplicationEventListener {
 
 	}
 
+	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_CITYCHECK_POSITIVE)
+	public void receiveCityCheckPositiveIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
+
+		
+
+	}
+	
+	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_CITYCHECK_NEGATIVE)
+	public void receiveCityCheckNegativeIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
+
+		
+
+	}
+	
 }

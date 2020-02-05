@@ -9,7 +9,9 @@ public interface CreditApplicationScoringDispatcher {
 	String CREDIT_APPLICATION_OUT = "creditApplicationOut";
 	String CREDIT_APPLICATION_SCORING_POSITIVE = "scoringPositiveIn";
 	String CREDIT_APPLICATION_SCORING_NEGATIVE = "scoringNegativeIn";
-
+	String CREDIT_APPLICATION_CITYCHECK_POSITIVE = "cityCheckPositiveIn";
+	String CREDIT_APPLICATION_CITYCHECK_NEGATIVE = "cityCheckNegativeIn";
+	
 	@Input
 	SubscribableChannel scoringNegativeIn();
 
@@ -18,4 +20,11 @@ public interface CreditApplicationScoringDispatcher {
 
 	@Output
 	MessageChannel creditApplicationOut();
+	
+	
+	@Input                
+	SubscribableChannel cityCheckNegativeIn();
+	
+	@Input
+	SubscribableChannel cityCheckPositiveIn();
 }
