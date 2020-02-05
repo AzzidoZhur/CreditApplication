@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Alle Kreditanträge</title>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th> iD </th>
+            <th> Nachname </th>
+            <th> Kreditsumme </th>
+            <th> Status </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${creditApplications.empty}">
+            <td colspan="2"> Keine Kreditanträge vorhanden </td>
+        </tr>
+        <tr th:each="creditApplication : ${creditApplications}">
+            <td><span th:text="${creditApplication.creditApplicationId}"> iD </span></td>
+            <td><span th:text="${creditApplication.lastName}"> Nachname </span></td>
+            <td><span th:text="${creditApplication.creditSum}"> Kreditsumme </span></td>
+            <td><span th:text="${creditApplication.applicationState}"> Status </span></td>
+        <td>
+        <a href="#" th:href="@{/StatusDetail/__${creditApplication.creditApplicationId}__}" th:text="${creditApplication.creditApplicationId}">Kredit</a>
+        </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
