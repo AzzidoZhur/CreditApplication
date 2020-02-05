@@ -55,7 +55,7 @@ public class CreditApplicationController {
 
 		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
 		creditApplicationScoringDispatcher.creditApplicationOut().send(message);
-
+		model.addAttribute("creditApplications", creditApplication);
 		return "StatusCreditApplication";
 	}
 
@@ -80,8 +80,12 @@ public class CreditApplicationController {
 
 	@GetMapping("/StatusUpdate/{id}")
 	public String statusUpdate(@PathVariable String id, Model model) {
+		
+		System.out.println("ID before .... " + id);
 		CreditApplication creditApplication = repository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Not found"));
+		
+		System.out.println("ID after .... " + creditApplication.getCreditApplicationId());
 
 		model.addAttribute("creditApplication", creditApplication);
 		return "StatusCreditApplication";

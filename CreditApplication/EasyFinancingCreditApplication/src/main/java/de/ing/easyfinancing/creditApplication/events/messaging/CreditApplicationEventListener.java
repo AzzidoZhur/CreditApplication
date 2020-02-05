@@ -14,32 +14,43 @@ import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepo
 @Transactional
 public class CreditApplicationEventListener {
 	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
-    private final CreditApplicationRepository creditApplicationRepository;
-    
-	public CreditApplicationEventListener(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher, CreditApplicationRepository creditApplicationRepository) {
+	private final CreditApplicationRepository creditApplicationRepository;
+
+	public CreditApplicationEventListener(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
+			CreditApplicationRepository creditApplicationRepository) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
 		this.creditApplicationRepository = creditApplicationRepository;
 	}
 
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_SCORING_NEGATIVE)
-	public void receiveCreditApplicationScoringNegative(
-			@Payload ScoringDoneEvent scoringDoneEvent) {
-		
-		updateScoringState(scoringDoneEvent, "failed");
+	public void receiveCreditApplicationScoringNegative(@Payload ScoringDoneEvent scoringDoneEvent) {
+
+		CreditApplication creditApplication = creditApplicationRepository
+				.findById(scoringDoneEvent.getCreditApplicationId())
+				.orElseThrow(() -> new RuntimeException("Not found"));
+
+		creditApplication.setScoringState("failed");
+
+		creditApplication.setApplicationState("abgelehnt");
 
 	}
 
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_SCORING_POSITIVE)
-	public void receiveCreditApplicationScoringPositive(
-			@Payload ScoringDoneEvent scoringDoneEvent) {
-		
-		updateScoringState(scoringDoneEvent, "OK");
+	public void receiveCreditApplicationScoringPositive(@Payload ScoringDoneEvent scoringDoneEvent) {
+
+		CreditApplication creditApplication = creditApplicationRepository
+				.findById(scoringDoneEvent.getCreditApplicationId())
+				.orElseThrow(() -> new RuntimeException("Not found"));
+		if (creditApplication.getApplicationState().equals("abgelehnt"))
+
+			return;
+
+		creditApplication.setScoringState("OK");
+
+		if (creditApplication.getCityCheckState().equals("OK"))
+
+			creditApplication.setApplicationState("genehmigt");
+
 	}
 
-	private void updateScoringState(ScoringDoneEvent scoringDoneEvent, String newState) {
-		CreditApplication creditApplication = creditApplicationRepository.findById(scoringDoneEvent.getCreditApplicationId())
-				.orElseThrow(() -> new RuntimeException("Not found"));
-		
-		creditApplication.setScoringState(newState);
-	}
 }
