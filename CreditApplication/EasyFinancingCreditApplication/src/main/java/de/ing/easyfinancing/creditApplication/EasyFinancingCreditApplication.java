@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
 import de.ing.easyfinancing.creditApplication.events.CreditApplicationScoringDispatcher;
-
+// Aenderung
 @SpringBootApplication
 @EnableBinding(CreditApplicationScoringDispatcher.class)
 public class EasyFinancingCreditApplication {
