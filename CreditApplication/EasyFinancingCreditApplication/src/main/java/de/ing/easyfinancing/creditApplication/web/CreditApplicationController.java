@@ -23,10 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class CreditApplicationController {
-	
+
 	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
 	private final CreditApplicationRepository repository;
-	public CreditApplicationController(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher, final CreditApplicationRepository repository) {
+
+	public CreditApplicationController(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
+			final CreditApplicationRepository repository) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
 		this.repository = repository;
 	}
@@ -42,41 +44,49 @@ public class CreditApplicationController {
 		model.addAttribute("creditApplication", new CreditApplication());
 		return "CreditApplicationCreator";
 	}
+
 	@PostMapping("/SaveCreditApplication")
 	public String saveCreditApplication(@Valid @ModelAttribute("creditApplication") CreditApplication creditApplication,
 			BindingResult errors, Model model) {
-		CreditApplicationEnteredEvent result = CreditApplicationEnteredEvent
-				.builder()
-				.creditApplication(creditApplication)
-				.build();
-		
+		CreditApplicationEnteredEvent result = CreditApplicationEnteredEvent.builder()
+				.creditApplication(creditApplication).build();
+
 		repository.save(creditApplication);
-		
+
 		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
-		creditApplicationScoringDispatcher.creditApplicationOut().send(message); 
-		
+		creditApplicationScoringDispatcher.creditApplicationOut().send(message);
+
 		return "StatusCreditApplication";
 	}
-	
+
 	@GetMapping("/CreditApplicationOverview")
-	public String creditApplicationOverview( Model model) {
+	public String creditApplicationOverview(Model model) {
 		List<CreditApplication> creditApplications = repository.findAllAsList();
-			
+
 		model.addAttribute("creditApplications", creditApplications);
-		
 
 		return "CreditApplicationOverview";
 	}
-	
+
 	@GetMapping("/StatusDetail/{id}")
 	public String statusDetails(@PathVariable String id, Model model) {
-		CreditApplication creditApplication = repository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
-		
+		CreditApplication creditApplication = repository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Not found"));
+
 		model.addAttribute("creditApplication", creditApplication);
-		return "StatusCreditApplication"; 
-		
+		return "StatusCreditApplication";
+
+	}
+
+	@GetMapping("/StatusUpdate/{id}")
+	public String statusUpdate(@PathVariable String id, Model model) {
+		CreditApplication creditApplication = repository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Not found"));
+
+		model.addAttribute("creditApplication", creditApplication);
+		return "StatusCreditApplication";
+
 	}
 	
 	
-
 }

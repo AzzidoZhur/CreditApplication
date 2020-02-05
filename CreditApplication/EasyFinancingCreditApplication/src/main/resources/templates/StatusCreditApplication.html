@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form th:action="@{/SaveCreditApplication}"
-		th:object="${creditApplication}" method="post">
+<form 
+		th:object="${creditApplication}">
 		<span th:text="*{creditApplicationId}" /><br>
 		<span th:text="*{applicationDate}" />
 		<table border="1">
@@ -40,9 +40,13 @@
 			
 			
 			<tr>
-				<td><input type="submit" value="stornieren" /></td>
+							
+				
 			</tr>
 		</table>
+		
+				<a href="#" th:href="@{/Storno/__${creditApplication.creditApplicationId}__}" >Storno</a>
+       			<a href="#" th:href="@{/StatusUpdate/__${creditApplication.creditApplicationId}__}">Update</a>
 	</form>
 
 </body>
