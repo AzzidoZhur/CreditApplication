@@ -3,71 +3,54 @@ package de.ing.easyfinancing.creditApplication.events.messaging;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.ing.easyfinancing.creditApplication.events.CityCheckDoneEvent;
 import de.ing.easyfinancing.creditApplication.events.CreditApplicationScoringDispatcher;
 import de.ing.easyfinancing.creditApplication.events.ScoringDoneEvent;
-import de.ing.easyfinancing.creditApplication.model.CreditApplication;
-import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepository;
+import de.ing.easyfinancing.creditApplication.service.CreditApplicationStateService;
 
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 @Component
-@Transactional
 public class CreditApplicationEventListener {
 
-	private final CreditApplicationRepository creditApplicationRepository;
 	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
-	
+	private final CreditApplicationStateService creditApplicationStateService;
 
 	public CreditApplicationEventListener(final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher,
-			CreditApplicationRepository creditApplicationRepository) {
+			CreditApplicationStateService creditApplicationStateService) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
-		this.creditApplicationRepository = creditApplicationRepository;
+		this.creditApplicationStateService = creditApplicationStateService;
 	}
 
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_SCORING_NEGATIVE)
-	public void receiveCreditApplicationScoringNegative(@Payload ScoringDoneEvent scoringDoneEvent) {
+		public void receiveCreditApplicationScoringNegative(@Payload ScoringDoneEvent scoringDoneEvent) {
+		System.out.println("ScoringNegativeStart");
+		
+		creditApplicationStateService.processScoringNegative(scoringDoneEvent.getCreditApplicationId());
 
-		CreditApplication creditApplication = creditApplicationRepository
-				.findById(scoringDoneEvent.getCreditApplicationId())
-				.orElseThrow(() -> new RuntimeException("Not found"));
-
-		creditApplication.setScoringState("failed");
-
-		creditApplication.setApplicationState("abgelehnt");
-
+		System.out.println("ScoringNegativeStop");
 	}
 
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_SCORING_POSITIVE)
 	public void receiveCreditApplicationScoringPositive(@Payload ScoringDoneEvent scoringDoneEvent) {
-
-		CreditApplication creditApplication = creditApplicationRepository
-				.findById(scoringDoneEvent.getCreditApplicationId())
-				.orElseThrow(() -> new RuntimeException("Not found"));
-		if (creditApplication.getApplicationState().equals("abgelehnt"))
-
-			return;
-
-		creditApplication.setScoringState("OK");
-
-		if (creditApplication.getCityCheckState().equals("OK"))
-
-			creditApplication.setApplicationState("genehmigt");
-
+		System.out.println("ScoringPositiveStart");
+		creditApplicationStateService.processScoringPositive(scoringDoneEvent.getCreditApplicationId());
+		System.out.println("ScoringPositiveStop");
 	}
 
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_CITYCHECK_POSITIVE)
 	public void receiveCityCheckPositiveIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
-
-		
-
+		System.out.println("CityCheckPositiveStart");
+		creditApplicationStateService.processCityCheckPositive(cityCheckDoneEvent.getCreditApplicationId());
+		System.out.println("CityCheckPositiveStop");
 	}
-	
+
 	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_CITYCHECK_NEGATIVE)
 	public void receiveCityCheckNegativeIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
 
-		
-
+		creditApplicationStateService.processCityCheckNegative(cityCheckDoneEvent.getCreditApplicationId());
 	}
-	
+
 }
