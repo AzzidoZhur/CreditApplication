@@ -48,14 +48,12 @@ public class CreditApplicationController {
 	@PostMapping("/SaveCreditApplication")
 	public String saveCreditApplication(@Valid @ModelAttribute("creditApplication") CreditApplication creditApplication,
 			BindingResult errors, Model model) {
-		CreditApplicationEnteredEvent result = CreditApplicationEnteredEvent.builder()
-				.creditApplication(creditApplication).build();
 
-		repository.save(creditApplication);
-
-		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
-		creditApplicationScoringDispatcher.creditApplicationOut().send(message);
-		model.addAttribute("creditApplications", creditApplication);
+		 if (errors.hasErrors()) {
+			 
+	            return "CreditApplicationCreator";
+	        }
+		
 		return "StatusCreditApplication";
 	}
 

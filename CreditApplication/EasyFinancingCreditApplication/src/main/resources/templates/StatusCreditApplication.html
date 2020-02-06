@@ -1,53 +1,82 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:th="http://www.thymeleaf.org" 
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="UTF-8" name="viewport" content="width=device-width, intial-scale=2">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
 <meta charset="ISO-8859-1">
+
 <title>Insert title here</title>
 </head>
-<body>
-<form
-		th:object="${creditApplication}">
+<body style="background-color: #2E2E2E; color: white;" >
+
+<div class="bs-test">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Startseite</a></li>
+            <li class="breadcrumb-item"><a href="/CreditApplicationCreator">Kreditantrag</a></li>
+            <li class="breadcrumb-item"><a href="/CreditApplicationOverview">StatusÃ¼bersicht</a></li>
+            <li class="breadcrumb-item active">Details</li>
+        </ol>
+    </nav>
+</div>
+
+<div class= "container-fluid">
+
+
+<form th:action="@{/SaveCreditApplication}"
+		th:object="${creditApplication}" method="post">
 		<span th:text="*{creditApplicationId}" /><br>
 		<span th:text="*{applicationDate}" />
-		<table border="1">
-			<tr>
-				<td><label th:text="Vorname" /></td>
-				<td><input type="text" th:field="*{firstName}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Nachname" /></td>
-				<td><input type="text" th:field="*{lastName}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="'gewünschter Kreditbetrag'" /></td>
-				<td><input type="number" th:field="*{creditSum}" /></td>
-			</tr>
-						<tr>
-				<td><label th:text="Scoring" /></td>
-				<td><input type="text" th:field="*{scoringState}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Ortsprüfung" /></td>
-				<td><input type="text" th:field="*{cityCheckState}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Anfragestatus" /></td>
-				<td><input type="text" th:field="*{applicationState}" /></td>
-			</tr>
-			
-			
-			<tr>
-							
-				
-			</tr>
-		</table>
 		
-				<a href="#" th:href="@{/Storno/__${creditApplication.creditApplicationId}__}" >Storno</a>
-       			<a href="#" th:href="@{/StatusUpdate/__${creditApplication.creditApplicationId}__}">Update</a>
+	<br><br><br><br>
+	
+				<label th:text="Vorname " />
+				
+				<input type="text" th:field="*{firstName}" />
+				
+				<label th:text="Nachname " /></td>
+				
+				<input type="text" th:field="*{lastName}" />
+				
+				<label th:text="Kreditsumme " />
+				
+				<input type="number" th:field="*{creditSum}" />
+				
+				<label th:text="Scoring " />
+				
+				<input type="text" th:field="*{scoringState}" />
+				
+				<label th:text="OrtsprÃ¼fung " />
+				
+				<input type="text" th:field="*{cityCheckState}" />
+				
+				<label th:text="Anfragestatus " />
+				
+				<input type="text" th:field="*{applicationState}" />
+			
+
+		<input type="submit" value="stornieren"/><i class="far fa-trash-alt"/>
+		
+		
+		 
+		
 	</form>
+	</div>
 
 </body>
 </html>

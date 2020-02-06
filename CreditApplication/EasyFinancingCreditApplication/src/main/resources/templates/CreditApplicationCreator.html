@@ -1,48 +1,181 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:th="http://www.thymeleaf.org" 
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="ISO-8859-1" name="viewport" content="width=device-width, intial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
 <meta charset="ISO-8859-1">
+
 <title>Insert title here</title>
+
 </head>
-<body>
+<body style="background-color: #2E2E2E;">
+
+<div class="bs-test">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Startseite</a></li>
+            <li class="breadcrumb-item active">Kreditantrag</a></li>
+            
+        </ol>
+    </nav>
+</div>
+
+<div class= "container">
 
 	<form th:action="@{/SaveCreditApplication}"
-		th:object="${creditApplication}" method="post">
+		th:object="${creditApplication}" method="post" style="color: #FFFFFF;">
+	
 		<span th:text="*{creditApplicationId}" /><br>
 		<span th:text="*{applicationDate}" />
-		<table border="1">
-			<tr>
-				<td><label th:text="Vorname" /></td>
-				<td><input type="text" th:field="*{firstName}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Nachname" /></td>
-				<td><input type="text" th:field="*{lastName}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Wohnort" /></td>
-				<td><input type="text" th:field="*{city}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Einnahmen" /></td>
-				<td><input type="number" th:field="*{monthlyIncome}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="Ausgaben" /></td>
-				<td><input type="number" th:field="*{monthlyExpenditure}" /></td>
-			</tr>
-			<tr>
-				<td><label th:text="'gewünschter Kreditbetrag'" /></td>
-				<td><input type="number" th:field="*{creditSum}" /></td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="zahlungspflichtig Kaufen" /></td>
-			</tr>
-		</table>
+		<br>
+		<br>
+		<br>
+		<div class="form-row">
+		
+		<div class="col">
+	<label> Vorname: </label>
+		</div>
+		
+		<div class="col">
+		</div>
+		
+		<div class="col">
+		<label> Nachname: </label>
+		
+		</div>
+		
+		<div class="col">
+		</div>
+		</div>
+		
+		<div class="form-row">
+		
+		<div class="col">
+		<div class="md-form">
+		<input  type="text" th:field="*{firstName}" placeholder="Max" />
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Please fill out this field.</div>
+		</div>
+		</div>
+		
+		<div class="col">
+		</div>
+		
+		<div class="col">
+		<input  type="text" th:field="*{lastName}" placeholder="Mustermann" />
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Please fill out this field.</div>
+		</div>
+		
+		<div class="col">
+		</div>
+		</div>
+		<br>
+		<div class="form-row">
+		
+		<div class="col">
+	
+		<label> Wohnort: </label>
+		
+		</div>
+		</div>
+		<div class="form-row">
+		<div class="col">
+		<input  type="text" th:field="*{city}" placeholder="Musterstadt" />
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Please fill out this field.</div>
+       	</div>
+       
+       	<div class="col">
+       	</div>
+       	<div class="col">
+       	</div>
+		</div>
+		<br>
+		<div class="form-row">
+		
+		<div class="col">
+		<label> Einnahmen: </label>
+		</div>
+		<div class="col">
+		</div>
+		<div class="col">
+		<label> Ausgaben: </label>
+		</div>
+		
+		<div class="col">
+		</div>
+		</div>
+		<div class="form-row">
+		<div class="col">
+		
+		
+		<input type="number"  th:field="*{monthlyIncome}"/>
+		
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('monthlyIncome')}" th:errors="*{monthlyIncome}">Please fill out this field.</div>
+		
+		</div>
+		<div class="col">
+		</div>
+		
+		<div class="col">
+		<input type="number" th:field="*{monthlyExpenditure}"/>
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('monthlyExpenditure')}" th:errors="*{monthlyExpenditure}">Please fill out this field.</div>
+		</div>
+		
+		<div class="col">
+		</div>
+		
+		</div>
+		<br>
+		<div class="form-row">
+		
+		<div class="col">
+		<label> Kreditsumme: </label>
+		</div>
+		<div class="col">
+		</div>
+		<div class="col">
+		</div>
+		<div class="col">
+		</div>
+		</div>
+		<div class="form-row">
+		<div class="col">
+		<input type="number" th:field="*{creditSum}"/>
+		<div class = "text-danger col-sm-10" th:if="${#fields.hasErrors('creditSum')}" th:errors="*{creditSum}">Please fill out this field.</div>
+		</div>
+		</div>
+		
+	<br>
+		<div class="form-row">
+		
+		<div class = "col">
+		</div>
+	
+		<div class = "col">
+		</div>
+		<div class = "col">
+		<input type="submit" value="beantragen" />
+		</div>
+		<div class = "col">
+		</div>
+		
+		
+		</div>
 	</form>
+	
+	</div>
 
 </body>
 </html>

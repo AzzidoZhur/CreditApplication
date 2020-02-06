@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:th="http://www.thymeleaf.org" 
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="ISO-8859-1" name="viewport" content="width=device-width, intial-scale=2">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+
 <title>Alle Kreditanträge</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+
+</style>
 </head>
-<body>
-<table>
-    <thead>
+<body style="background-color: #2E2E2E;">
+
+<div class="bs-test">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Startseite</a></li>
+            <li class="breadcrumb-item"><a href="/CreditApplicationCreator">Kreditantrag</a></li>
+            <li class="breadcrumb-item active">Statusübersicht</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="table-responsive" align="center">
+
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+<table  id ="overview" class="table thead-dark table-sm"  style="color: #FFFFFF;" >
+    <thead class="thead-dark" >
         <tr>
-            <th> iD </th>
-            <th> Nachname </th>
-            <th> Kreditsumme </th>
-            <th> Status </th>
+            <th onclick="sortTable(0)"> iD </th>
+            <th onclick="sortTable(1)"> Nachname </th>
+            <th onclick="sortTable(2)"> Kreditsumme </th>
+            <th onclick="sortTable(3)"> Status </th>
+            <th onclick="sortTable(4)"> Details </th>
         </tr>
     </thead>
     <tbody>
@@ -27,12 +77,23 @@
             <td><span th:text="${creditApplication.creditSum}"> Kreditsumme </span></td>
             <td><span th:text="${creditApplication.applicationState}"> Status </span></td>
         <td>
-        <a href="#" th:href="@{/StatusDetail/__${creditApplication.creditApplicationId}__}" th:text="${creditApplication.creditApplicationId}">Kredit</a>
-        
+        <a href="#" th:href="@{/StatusDetail/__${creditApplication.creditApplicationId}__}" class="far fa-edit"></a>
         </td>
         </tr>
     </tbody>
 </table>
+
+</div>
+
+<script type="text/javascript" src="js/CreditApplicationOverview.js">
+
+
+
+</script>
+
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
