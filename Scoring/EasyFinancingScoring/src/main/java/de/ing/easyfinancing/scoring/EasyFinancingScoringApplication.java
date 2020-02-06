@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
-import de.ing.easyfinancing.scoring.events.CreditApplicationScoringDispatcher;
+import de.ing.easyfinancing.scoring.events.CreditApplicationScoringChannels;
 
 @SpringBootApplication
-@EnableBinding(CreditApplicationScoringDispatcher.class)
+@EnableBinding(CreditApplicationScoringChannels.class)
 public class EasyFinancingScoringApplication {
 
 	public static void main(String[] args) {

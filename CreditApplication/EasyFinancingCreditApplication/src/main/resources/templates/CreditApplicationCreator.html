@@ -40,6 +40,7 @@
 	
 		<span th:text="*{creditApplicationId}" /><br>
 		<span th:text="*{applicationDate}" />
+<<<<<<< HEAD
 		<br>
 		<br>
 		<br>
@@ -173,6 +174,37 @@
 		
 		
 		</div>
+=======
+		<table border="1">
+			<tr>
+				<td><label th:text="Vorname" /></td>
+				<td><input value="Max" type="text" th:field="*{firstName}" /></td>
+			</tr>
+			<tr>
+				<td><label th:text="Nachname" /></td>
+				<td><input type="text" th:field="*{lastName}" value="Mustermann"/></td>
+			</tr>
+			<tr>
+				<td><label th:text="Wohnort" /></td>
+				<td><input type="text" th:field="*{city}" value="Frankfurt"/></td>
+			</tr>
+			<tr>
+				<td><label th:text="Einnahmen" /></td>
+				<td><input type="number" th:field="*{monthlyIncome}" value="5000"/></td>
+			</tr>
+			<tr>
+				<td><label th:text="Ausgaben" /></td>
+				<td><input type="number" th:field="*{monthlyExpenditure}" value="1000"/></td>
+			</tr>
+			<tr>
+				<td><label th:text="'gewünschter Kreditbetrag'" /></td>
+				<td><input type="number" th:field="*{creditSum}" value="1000"/></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="zahlungspflichtig Kaufen" /></td>
+			</tr>
+		</table>
+>>>>>>> branch 'master' of https://github.com/AzzidoZhur/CreditApplication
 	</form>
 	
 	</div>

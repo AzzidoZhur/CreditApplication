@@ -11,4 +11,7 @@ public interface CreditApplicationRepository extends CrudRepository<CreditApplic
 
 	@Query("Select c from CreditApplication c")
 	List<CreditApplication> findAllAsList();
+	
+	@Query("Update CreditApplication set scoringState = :newState where creditApplicationId = :id" )
+	public void updateScoringState(String id, String newState); 
 }

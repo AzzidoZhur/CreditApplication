@@ -8,7 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+<<<<<<< HEAD
 import javax.validation.constraints.DecimalMin;
+=======
+import javax.persistence.Version;
+>>>>>>> branch 'master' of https://github.com/AzzidoZhur/CreditApplication
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
@@ -57,9 +61,15 @@ public class CreditApplication implements Serializable {
 	
 	@Builder.Default
 	private LocalDateTime applicationDate = LocalDateTime.now(); 
+<<<<<<< HEAD
 	
 	@DecimalMin(inclusive = false , message = "darf nicht negativ oder leer (0) sein", value = "0")
 	@NotNull
+=======
+	@Version
+	private long version;
+	@Min(value = 0)
+>>>>>>> branch 'master' of https://github.com/AzzidoZhur/CreditApplication
 	private double monthlyIncome; 
 	@Min(value = 0)
 	private double monthlyExpenditure; 
