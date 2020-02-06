@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
@@ -52,7 +53,8 @@ public class CreditApplication implements Serializable {
 	
 	@Builder.Default
 	private LocalDateTime applicationDate = LocalDateTime.now(); 
-	
+	@Version
+	private long version;
 	@Min(value = 0)
 	private double monthlyIncome; 
 	@Min(value = 0)
