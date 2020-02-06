@@ -7,20 +7,20 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import de.ing.easyfinancing.scoring.events.CreditApplicationEnteredEvent;
-import de.ing.easyfinancing.scoring.events.CreditApplicationScoringDispatcher;
+import de.ing.easyfinancing.scoring.events.CreditApplicationScoringChannels;
 import de.ing.easyfinancing.scoring.events.ScoringDoneEvent;
 import de.ing.easyfinancing.scoring.models.CreditApplication;
 
 @Component
 public class CreditApplicationEventListener {
-	private final CreditApplicationScoringDispatcher creditApplicationScoringDispatcher;
+	private final CreditApplicationScoringChannels creditApplicationScoringDispatcher;
 
-	public CreditApplicationEventListener(CreditApplicationScoringDispatcher creditApplicationScoringDispatcher) {
+	public CreditApplicationEventListener(CreditApplicationScoringChannels creditApplicationScoringDispatcher) {
 		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
 	}
 	
 	
-	@StreamListener(CreditApplicationScoringDispatcher.CREDIT_APPLICATION_ENTERED)
+	@StreamListener(CreditApplicationScoringChannels.CREDIT_APPLICATION_ENTERED)
 	public void receiveCreditApplicationEnteredIn(@Payload CreditApplicationEnteredEvent creditApplicationEnteredEvent) {
 		CreditApplication creditApplication = creditApplicationEnteredEvent.getCreditApplication();
 		

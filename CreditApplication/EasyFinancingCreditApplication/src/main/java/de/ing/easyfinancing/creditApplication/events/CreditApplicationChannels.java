@@ -5,7 +5,7 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface CreditApplicationScoringDispatcher {
+public interface CreditApplicationChannels {
 	String CREDIT_APPLICATION_OUT = "creditApplicationOut";
 	String CREDIT_APPLICATION_SCORING_POSITIVE = "scoringPositiveIn";
 	String CREDIT_APPLICATION_SCORING_NEGATIVE = "scoringNegativeIn";
