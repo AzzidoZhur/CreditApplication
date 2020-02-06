@@ -26,30 +26,21 @@ public class CreditApplicationEventListener {
 
 	@StreamListener(CreditApplicationChannels.CREDIT_APPLICATION_SCORING_NEGATIVE)
 		public void receiveCreditApplicationScoringNegative(@Payload ScoringDoneEvent scoringDoneEvent) {
-		System.out.println("ScoringNegativeStart");
-		
 		creditApplicationStateService.processScoringNegative(scoringDoneEvent.getCreditApplicationId());
-
-		System.out.println("ScoringNegativeStop");
 	}
 
 	@StreamListener(CreditApplicationChannels.CREDIT_APPLICATION_SCORING_POSITIVE)
 	public void receiveCreditApplicationScoringPositive(@Payload ScoringDoneEvent scoringDoneEvent) {
-		System.out.println("ScoringPositiveStart");
 		creditApplicationStateService.processScoringPositive(scoringDoneEvent.getCreditApplicationId());
-		System.out.println("ScoringPositiveStop");
 	}
 
 	@StreamListener(CreditApplicationChannels.CREDIT_APPLICATION_CITYCHECK_POSITIVE)
 	public void receiveCityCheckPositiveIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
-		System.out.println("CityCheckPositiveStart");
 		creditApplicationStateService.processCityCheckPositive(cityCheckDoneEvent.getCreditApplicationId());
-		System.out.println("CityCheckPositiveStop");
 	}
 
 	@StreamListener(CreditApplicationChannels.CREDIT_APPLICATION_CITYCHECK_NEGATIVE)
 	public void receiveCityCheckNegativeIn(@Payload CityCheckDoneEvent cityCheckDoneEvent) {
-
 		creditApplicationStateService.processCityCheckNegative(cityCheckDoneEvent.getCreditApplicationId());
 	}
 

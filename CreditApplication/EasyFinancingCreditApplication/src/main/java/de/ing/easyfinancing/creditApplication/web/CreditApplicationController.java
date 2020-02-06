@@ -24,12 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CreditApplicationController {
 
-	private final CreditApplicationChannels creditApplicationScoringDispatcher;
+	private final CreditApplicationChannels creditApplicationChannels;
 	private final CreditApplicationRepository repository;
 
 	public CreditApplicationController(CreditApplicationChannels creditApplicationScoringDispatcher,
 			final CreditApplicationRepository repository) {
-		this.creditApplicationScoringDispatcher = creditApplicationScoringDispatcher;
+		this.creditApplicationChannels = creditApplicationScoringDispatcher;
 		this.repository = repository;
 	}
 
@@ -54,7 +54,7 @@ public class CreditApplicationController {
 		repository.save(creditApplication);
 
 		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
-		creditApplicationScoringDispatcher.creditApplicationOut().send(message);
+		creditApplicationChannels.creditApplicationOut().send(message);
 		model.addAttribute("creditApplications", creditApplication);
 		return "StatusCreditApplication";
 	}

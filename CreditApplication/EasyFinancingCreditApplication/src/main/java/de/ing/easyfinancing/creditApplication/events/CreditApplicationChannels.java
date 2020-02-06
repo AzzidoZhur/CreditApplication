@@ -7,6 +7,7 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface CreditApplicationChannels {
 	String CREDIT_APPLICATION_OUT = "creditApplicationOut";
+	String CREDIT_APPLICATION_OUT_APPROVED = "creditApplicationOutApproved";
 	String CREDIT_APPLICATION_SCORING_POSITIVE = "scoringPositiveIn";
 	String CREDIT_APPLICATION_SCORING_NEGATIVE = "scoringNegativeIn";
 	String CREDIT_APPLICATION_CITYCHECK_POSITIVE = "cityCheckPositiveIn";
@@ -18,13 +19,15 @@ public interface CreditApplicationChannels {
 	@Input
 	SubscribableChannel scoringPositiveIn();
 
-	@Output
-	MessageChannel creditApplicationOut();
-	
-	
 	@Input                
 	SubscribableChannel cityCheckNegativeIn();
 	
 	@Input
 	SubscribableChannel cityCheckPositiveIn();
+	
+	@Output
+	MessageChannel creditApplicationOut();
+	
+	@Output
+	MessageChannel creditApplicationOutApproved();
 }
