@@ -8,17 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-<<<<<<< HEAD
-import javax.validation.constraints.DecimalMin;
-=======
 import javax.persistence.Version;
->>>>>>> branch 'master' of https://github.com/AzzidoZhur/CreditApplication
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-
-import com.sun.istack.NotNull;
-
-import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,38 +34,32 @@ public class CreditApplication implements Serializable {
 	private static final long serialVersionUID = 8144682724082102640L;
 	@Builder.Default
 	@Size(min = 36, max = 36)
-	@NotBlank
+	@NonNull
 	@Id
-	@Column(length = 36)
+	@Column(length = 36, nullable = false)
 	private String creditApplicationId = UUID.randomUUID().toString();
-	@Size(min = 2, max = 51, message = "bitte min. 2 Zeichen eingeben")
-	@NotBlank
-	@Column(length = 51)
+	@Size(min = 2, max = 51)
+	@NonNull
+	@Column(length = 51, nullable = false)
 	private String firstName;
-	@Size(min = 2, max = 51,  message = "bitte min. 2 Zeichen eingeben")
-	@NotBlank
-	@Column(length = 51)
+	@Size(min = 2, max = 51)
+	@NonNull
+	@Column(length = 51, nullable = false)
 	private String lastName;
-	@Size(min = 2, max = 51, message = "bitte min. 2 Zeichen eingeben")
-	@NotBlank
-	@Column(length = 51)
+	@Size(min = 2, max = 51)
+	@NonNull
+	@Column(length = 51, nullable = false)
 	private String city; 
 	
 	@Builder.Default
 	private LocalDateTime applicationDate = LocalDateTime.now(); 
-<<<<<<< HEAD
-	
-	@DecimalMin(inclusive = false , message = "darf nicht negativ oder leer (0) sein", value = "0")
-	@NotNull
-=======
 	@Version
 	private long version;
 	@Min(value = 0)
->>>>>>> branch 'master' of https://github.com/AzzidoZhur/CreditApplication
 	private double monthlyIncome; 
 	@Min(value = 0)
 	private double monthlyExpenditure; 
-	@DecimalMin(inclusive = false , message = "darf nicht negativ oder leer (0) sein", value = "0")
+	@Min(value = 0)
 	private double creditSum; 
 	
 	@Builder.Default
