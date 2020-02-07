@@ -1,7 +1,11 @@
 package de.ing.easyfinancing.creditApplication.service;
 
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import de.ing.easyfinancing.creditApplication.events.CreditApplicationChannels;
+import de.ing.easyfinancing.creditApplication.events.CreditApplicationEnteredEvent;
 import de.ing.easyfinancing.creditApplication.model.CreditApplication;
 import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepository;
 
@@ -9,9 +13,12 @@ import de.ing.easyfinancing.creditApplication.repositories.CreditApplicationRepo
 public class CreditApplicationStateService {
 
 	private final CreditApplicationRepository creditApplicationRepository;
+	private final CreditApplicationChannels creditApplicationChannels;
 
-	public CreditApplicationStateService(CreditApplicationRepository creditApplicationRepository) {
+	public CreditApplicationStateService(CreditApplicationRepository creditApplicationRepository, 
+			CreditApplicationChannels creditApplicationChannels) {
 		this.creditApplicationRepository = creditApplicationRepository;
+		this.creditApplicationChannels = creditApplicationChannels;
 	}
 
 	public void processScoringNegative(String id) {
@@ -30,6 +37,7 @@ public class CreditApplicationStateService {
 		creditApplication.setScoringState("OK");
 		if (creditApplication.getCityCheckState().equals("OK"))
 			creditApplication.setApplicationState("genehmigt");
+			createApprovedEvent(creditApplication);
 	}
 
 	public void processCityCheckPositive(String id) {
@@ -40,7 +48,7 @@ public class CreditApplicationStateService {
 		creditApplication.setCityCheckState("OK");
 		if (creditApplication.getScoringState().equals("OK"))
 			creditApplication.setApplicationState("genehmigt");
-
+			createApprovedEvent(creditApplication);
 	}
 
 	public void processCityCheckNegative(String id) {
@@ -55,6 +63,13 @@ public class CreditApplicationStateService {
 		CreditApplication creditApplication = creditApplicationRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Not found"));
 		return creditApplication;
+	}
+	
+	private void createApprovedEvent(CreditApplication creditApplication) {
+		CreditApplicationEnteredEvent result = CreditApplicationEnteredEvent.builder()
+			.creditApplication(creditApplication).build();
+		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
+		creditApplicationChannels.creditApplicationOutApproved().send(message);
 	}
 
 }
