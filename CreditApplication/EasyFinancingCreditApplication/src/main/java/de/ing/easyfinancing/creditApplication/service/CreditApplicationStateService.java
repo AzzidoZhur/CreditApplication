@@ -22,7 +22,7 @@ public class CreditApplicationStateService {
 	}
 
 	public void processScoringNegative(String id) {
-		System.out.println("processScoringNegative");
+		
 		CreditApplication creditApplication = retrieveCreditApplication(id);
 		creditApplication.setScoringState("failed");
 		creditApplication.setApplicationState("abgelehnt");
@@ -30,7 +30,7 @@ public class CreditApplicationStateService {
 	}
 
 	public void processScoringPositive(String id) {
-		System.out.println("processScoringPositive");
+		
 		CreditApplication creditApplication = retrieveCreditApplication(id);
 		if (creditApplication.getApplicationState().equals("abgelehnt"))
 			return;
@@ -41,7 +41,7 @@ public class CreditApplicationStateService {
 	}
 
 	public void processCityCheckPositive(String id) {
-		System.out.println("processCityCheckPositive");
+		
 		CreditApplication creditApplication = retrieveCreditApplication(id);
 		if (creditApplication.getApplicationState().equals("abgelehnt"))
 			return;
@@ -52,7 +52,7 @@ public class CreditApplicationStateService {
 	}
 
 	public void processCityCheckNegative(String id) {
-		System.out.println("processCityCheckNegative");
+		
 		CreditApplication creditApplication = retrieveCreditApplication(id);
 		creditApplication.setCityCheckState("failed");
 		creditApplication.setApplicationState("abgelehnt");

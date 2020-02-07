@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 public class CityCheckDoneEvent extends BaseEvent {
 
 	private static final long serialVersionUID = 7285438287976753712L;
-		private String creditApplicationId;
+		private String creditApplicationId; 
 	}
 
