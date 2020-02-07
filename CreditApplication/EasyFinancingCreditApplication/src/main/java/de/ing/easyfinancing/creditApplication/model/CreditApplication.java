@@ -42,7 +42,7 @@ public class CreditApplication implements Serializable {
 	@Size(min = 2, max = 51)
 	@NonNull
 	@Size(min = 2, max = 51, message = "bitte min. 2 Zeichen eingeben")
-	@NotBlank
+
 	@Column(length = 51)
 	private String firstName;
 	@Size(min = 2, max = 51)
@@ -60,7 +60,8 @@ public class CreditApplication implements Serializable {
 
 	@Builder.Default
 	private LocalDateTime applicationDate = LocalDateTime.now();
-
+	@Version
+	private long version;
 	@Min(value = 0)
 	@DecimalMin(inclusive = false , message = "darf nicht negativ oder leer (0) sein", value = "0")
 	@NotNull

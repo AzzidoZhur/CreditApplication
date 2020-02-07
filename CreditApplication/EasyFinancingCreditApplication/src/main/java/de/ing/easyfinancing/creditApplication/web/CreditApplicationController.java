@@ -52,6 +52,15 @@ public class CreditApplicationController {
 
 			return "CreditApplicationCreator";
 		}
+		CreditApplicationEnteredEvent result = CreditApplicationEnteredEvent.builder()
+				.creditApplication(creditApplication).build();
+
+		repository.save(creditApplication);
+
+		Message<CreditApplicationEnteredEvent> message = MessageBuilder.withPayload(result).build();
+		creditApplicationChannels.creditApplicationOut().send(message);
+		model.addAttribute("creditApplications", creditApplication);
+
 		return "StatusCreditApplication";
 	}
 
