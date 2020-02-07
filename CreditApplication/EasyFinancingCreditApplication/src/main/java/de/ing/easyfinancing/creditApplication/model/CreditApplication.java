@@ -31,6 +31,8 @@ public class CreditApplication implements Serializable {
 	/*
 	 * wandelt das Object in einen Bytestrom
 	 */
+
+
 	private static final long serialVersionUID = 8144682724082102640L;
 	@Builder.Default
 	@Size(min = 36, max = 36)
