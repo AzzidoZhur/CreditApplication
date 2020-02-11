@@ -3,6 +3,8 @@ package de.ing.easyfinancing.creditApplication.web;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;

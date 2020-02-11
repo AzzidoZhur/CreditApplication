@@ -14,4 +14,5 @@ public class EasyFinancingCreditApplication {
 		SpringApplication.run(EasyFinancingCreditApplication.class, args);
 	}
 
+
 }
